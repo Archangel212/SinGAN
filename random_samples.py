@@ -38,6 +38,7 @@ if __name__ == '__main__':
             real = functions.read_image(opt)
             functions.adjust_scales2image(real, opt)
             Gs, Zs, reals, NoiseAmp = functions.load_trained_pyramid(opt)
+            print("FUCK",Gs,Zs,reals, NoiseAmp)
             in_s = functions.generate_in2coarsest(reals,1,1,opt)
             SinGAN_generate(Gs, Zs, reals, NoiseAmp, opt, gen_start_scale=opt.gen_start_scale)
 
