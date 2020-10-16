@@ -253,7 +253,7 @@ def generate_in2coarsest(reals,scale_v,scale_h,opt):
         in_s = upsampling(real_down, real_down.shape[2], real_down.shape[3])
     return in_s
 
-def generate_dir2save(opt, args_default_value=None):
+def generate_dir2save(opt, args_default_value={}):
     dir2save = None
     #find arguments whose default value have changed
     changed_args_val = []

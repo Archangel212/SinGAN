@@ -25,11 +25,11 @@ if __name__ == '__main__':
     dir2save = functions.generate_dir2save(opt, args_default_value)
     if dir2save is None:
         print('task does not exist')
-    elif (os.path.exists(dir2save)):
-        if opt.mode == 'random_samples':
-            print('random samples for image %s, start scale=%d, already exist' % (opt.input_name, opt.gen_start_scale))
-        elif opt.mode == 'random_samples_arbitrary_sizes':
-            print('random samples for image %s at size: scale_h=%f, scale_v=%f, already exist' % (opt.input_name, opt.scale_h, opt.scale_v))
+    # elif (os.path.exists(dir2save)):
+    #     if opt.mode == 'random_samples':
+    #         print('random samples for image %s, start scale=%d, already exist' % (opt.input_name, opt.gen_start_scale))
+    #     elif opt.mode == 'random_samples_arbitrary_sizes':
+    #         print('random samples for image %s at size: scale_h=%f, scale_v=%f, already exist' % (opt.input_name, opt.scale_h, opt.scale_v))
     else:
         try:
             os.makedirs(dir2save)

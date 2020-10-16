@@ -10,7 +10,10 @@
       "request": "launch",
       "program": "${file}",
       "args" : ["--input_name", "Batik_188.jpg",
-         "--mode", "random_samples", "--gen_start_scale", "0", "--scale_factor", "0.65", "--not_cuda" ],
+         "--mode", "random_samples", "--gen_start_scale", "0", 
+         "--scale_factor", "0.65", 
+         "--alpha", "8",
+         "--not_cuda" ],
       "console": "integratedTerminal", 
     }
   ]
