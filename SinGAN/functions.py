@@ -253,12 +253,21 @@ def generate_in2coarsest(reals,scale_v,scale_h,opt):
         in_s = upsampling(real_down, real_down.shape[2], real_down.shape[3])
     return in_s
 
-def generate_dir2save(opt):
+def generate_dir2save(opt, args_default_value=None):
     dir2save = None
+    #find arguments whose default value have changed
+    changed_args_val = []
+    for key in opt.__dict__:
+      if args_default_value.__contains__(key):
+        if args_default_value[key] != opt.__dict__[key]:
+          changed_args_val.append(key)
+
+
+    # print(o,opt.__dict__[o])
     if (opt.mode == 'train') | (opt.mode == 'SR_train'):
         dir2save = 'TrainedModels/%s/scale_factor=%f,alpha=%d' % (opt.input_name[:-4], opt.scale_factor_init,opt.alpha)
     elif (opt.mode == 'animation_train') :
-        dir2save = 'TrainedModels/%s/scale_factor=%f_noise_padding' % (opt.input_name[:-4], opt.scale_factor_init)
+        dir2save = 'TrainedModels/%s/scale_factor=%f_noise_padding' % (opt.icnput_name[:-4], opt.scale_factor_init)
     elif (opt.mode == 'paint_train') :
         dir2save = 'TrainedModels/%s/scale_factor=%f_paint/start_scale=%d' % (opt.input_name[:-4], opt.scale_factor_init,opt.paint_start_scale)
     elif opt.mode == 'random_samples':
@@ -299,6 +308,20 @@ def post_config(opt):
     if torch.cuda.is_available() and opt.not_cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
     return opt
+
+def get_default_arguments_value(opt, parser):
+
+    """get default arguments value to be used later to name the training output folder.
+    if it is not the default anymore """
+
+    ommited_init_args = ["device","niter_init","noise_amp_init",
+      "nfc_init","min_nfc_init","scale_factor_init","out_",
+      "manualSeed", "mode","not_cuda"]
+    default = [(arg, parser.get_default(arg)) 
+      for arg in filter(lambda x: x not in ommited_init_args, opt.__dict__)]
+    
+    return dict(default)
+
 
 def calc_init_scale(opt):
     in_scale = math.pow(1/2,1/3)
